@@ -68,10 +68,10 @@ function createStatusUpdateModal() {
     const endTime = document.getElementById('end-time').value;
     
     // Update the GeoJSON data
-    currentData = updateDistrictStatus(districtName, newStatus, startTime, endTime);
+    const updatedData = updateDistrictStatus(districtName, newStatus, startTime, endTime);
     
     // Redraw the map with updated data
-    updateMapDisplay(currentData);
+    updateMapDisplay(updatedData);
     
     // Hide the modal
     modal.style.display = 'none';
