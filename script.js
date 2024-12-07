@@ -159,7 +159,7 @@ window.openStatusUpdateModal = function(districtName) {
 };
 
 // Load the GeoJSON file
-fetch('Copperbelt_4326_final.geojson')
+fetch('copperbelt_4326_final.geojson')
   .then(response => response.json())
   .then(data => {
     // Store the original data globally
