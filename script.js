@@ -117,7 +117,7 @@ function updateMapDisplay(data) {
     onEachFeature: (feature, layer) => {
       // Add popups with district info
       layer.bindPopup(`
-        <strong>District:</strong> ${feature.properties.NAME_2}<br>
+        <strong>District: </strong> ${feature.properties.NAME_2}<br>
         <strong>Est Population:</strong> ${feature.properties.PopEst || 'N/A'} <br>
         <strong>Power Status:</strong> ${feature.properties.Status || 'Unknown'}<br>
         <strong>Scheduled Outage Start Time:</strong> ${feature.properties.StartTime || 'N/A'}<br>
