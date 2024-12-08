@@ -85,12 +85,16 @@ function updateDistrictStatus(districtName, newStatus, startTime = '', endTime =
   // Create a deep copy of the current data to avoid direct mutation
   const updatedData = JSON.parse(JSON.stringify(currentData));
   
+  // Get current timestamp
+  const lastUpdatedDTG = new Date().toISOString();
+  
   // Find and update the specific district
   updatedData.features = updatedData.features.map(feature => {
     if (feature.properties.NAME_2 === districtName) {
       feature.properties.Status = newStatus;
       feature.properties.StartTime = startTime;
       feature.properties.EndTime = endTime;
+      feature.properties.lastUpdatedDTG = lastUpdatedDTG; // Add last updated timestamp
     }
     return feature;
   });
@@ -115,13 +119,19 @@ function updateMapDisplay(data) {
       fillOpacity: 0.4
     }),
     onEachFeature: (feature, layer) => {
+      // Format the last updated timestamp for readability
+      const formattedLastUpdated = feature.properties.lastUpdatedDTG 
+        ? new Date(feature.properties.lastUpdatedDTG).toLocaleString() 
+        : 'N/A';
+      
       // Add popups with district info
       layer.bindPopup(`
-        <strong>District: </strong> ${feature.properties.NAME_2}<br>
+        <strong>District:</strong> ${feature.properties.NAME_2}<br>
         <strong>Est Population:</strong> ${feature.properties.PopEst || 'N/A'} <br>
         <strong>Power Status:</strong> ${feature.properties.Status || 'Unknown'}<br>
         <strong>Scheduled Outage Start Time:</strong> ${feature.properties.StartTime || 'N/A'}<br>
         <strong>Scheduled Outage End Time:</strong> ${feature.properties.EndTime || 'N/A'}<br>
+        <strong>Last Updated:</strong> ${formattedLastUpdated}<br>
         <button onclick="openStatusUpdateModal('${feature.properties.NAME_2}')">Update Status</button>
       `);
 
@@ -159,9 +169,16 @@ window.openStatusUpdateModal = function(districtName) {
 };
 
 // Load the GeoJSON file
-fetch('copperbelt_4326_final.geojson')
+fetch('Copperbelt_4326_final.geojson')
   .then(response => response.json())
   .then(data => {
+    // Add lastUpdatedDTG to existing features if it doesn't exist
+    data.features.forEach(feature => {
+      if (!feature.properties.lastUpdatedDTG) {
+        feature.properties.lastUpdatedDTG = new Date().toISOString();
+      }
+    });
+    
     // Store the original data globally
     currentData = data;
     
