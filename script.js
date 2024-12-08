@@ -7,7 +7,8 @@ const map = L.map('map').setView([-13.0439, 28.3889], 9); // starting point of m
 
 // Add OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetMap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '<a href="https://gadm.org/">GADM Data <a/> &copy; <a href="https://www.openstreetMap.org/copyright">OpenStreetMap</a> contributors'
+  
 }).addTo(map);
 
 // Create a layer group for labels
