@@ -7,8 +7,7 @@ const map = L.map('map').setView([-13.0439, 28.3889], 9); // starting point of m
 
 // Add OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '<a href="https://gadm.org/">GADM Data <a/> &copy; <a href="https://www.openstreetMap.org/copyright">OpenStreetMap</a> contributors'
-  
+  attribution: '<a href="https://gadm.org/about.html">GADM |</a> &copy; <a href="https://www.openstreetMap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 // Create a layer group for labels
@@ -27,10 +26,12 @@ function createStatusUpdateModal() {
   modal.style.height = '100%';
   modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
   
+  // Modal content using HTML elements and styled within this script
+  // Modal is for updating the power status of a district and scheduled outage times.
   modal.innerHTML = `
     <div style="background-color: white; width: 300px; margin: 100px auto; padding: 20px; border-radius: 5px;">
       <h2>Update Power Status</h2>
-      <form id="status-update-form">
+      <form id="status-update-form"> 
         <label for="district">District:</label>
         <input type="text" id="district" name="district" readonly><br><br>
         
@@ -52,7 +53,7 @@ function createStatusUpdateModal() {
       </form>
     </div>
   `;
-  
+   // Append the modal to the body - critical part.
   document.body.appendChild(modal);
   
   // Cancel button functionality
@@ -96,10 +97,10 @@ function updateDistrictStatus(districtName, newStatus, startTime = '', endTime =
       feature.properties.StartTime = startTime;
       feature.properties.EndTime = endTime;
       feature.properties.lastUpdatedDTG = lastUpdatedDTG; // Add last updated timestamp
-    }
+    }// Return the updated feature
     return feature;
   });
-  
+  // Return the updated data
   return updatedData;
 }
 
@@ -111,7 +112,7 @@ function updateMapDisplay(data) {
     labelsLayer.clearLayers();
   }
   
-  // Add updated districts to the map
+  // Add updated districts to the map- keep it simple w loop
   geojsonLayer = L.geoJSON(data, {
     style: feature => ({
       color: feature.properties.Status === 'outage' ? 'red' : 
@@ -119,13 +120,13 @@ function updateMapDisplay(data) {
       weight: 2,
       fillOpacity: 0.4
     }),
-    onEachFeature: (feature, layer) => {
+    onEachFeature: (feature, layer) => { 
       // Format the last updated timestamp for readability
       const formattedLastUpdated = feature.properties.lastUpdatedDTG 
         ? new Date(feature.properties.lastUpdatedDTG).toLocaleString() 
         : 'N/A';
       
-      // Add popups with district info
+      // Add popups with district info using HTML
       layer.bindPopup(`
         <strong>District:</strong> ${feature.properties.NAME_2}<br>
         <strong>Est Population:</strong> ${feature.properties.PopEst || 'N/A'} <br>
@@ -137,7 +138,7 @@ function updateMapDisplay(data) {
       `);
 
       // Add labels on each district
-      const coordinates = layer.getBounds().getCenter();
+      const coordinates = layer.getBounds().getCenter(); // Get the center of the district
       const label = L.marker(coordinates, {
         icon: L.divIcon({
           className: 'label-icon',
@@ -186,9 +187,9 @@ fetch('copperbelt_4326_final.geojson')
     // Initial map display
     updateMapDisplay(data);
   })
-  .catch(err => console.error('Error loading GeoJSON:', err));
+  .catch(err => console.error('Error loading GeoJSON:', err)); // errors
 
-// Control labels visibility based on zoom level
+// Control labels visibility based on zoom level/extent of the view
 map.on('zoomend', function () {
   if (map.getZoom() >= 7) {
     map.addLayer(labelsLayer);
@@ -212,3 +213,21 @@ legend.onAdd = function () {
 };
 
 legend.addTo(map);
+
+// Function to toggle dropdown menu
+function toggleMenu() { // toggle down menu
+  const dropdown = document.getElementById('menu-dropdown');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+  const dropdown = document.getElementById('menu-dropdown');
+  const burgerMenu = document.querySelector('.burger-menu');
+  // Close dropdowns if the user clicks outside of it
+  if (dropdown.style.display === 'block' && 
+      !dropdown.contains(event.target) && 
+      !burgerMenu.contains(event.target)) {
+    dropdown.style.display = 'none';
+  }
+});

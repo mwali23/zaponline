@@ -3,17 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZAP-Electricity Status Map</title>
+  <title>ZAP</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+  <div class="header">
+    <h1>ZAP Status Map</h1>
+    <div class="header-right">
+      <!-- <div id="last-updated">Last Sync: Loading...</div>
+      <button onclick="fetchLatestData()">Refresh Data</button> -->
+      <div class="burger-menu" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i> <!-- Font awesome icon-->
+      </div>
+      <div id="menu-dropdown" class="dropdown-menu">
+        <a href="https://www.zesco.co.zm/assets/LoadManagement/ZESCO_8_hr_Loadshedding%20_Schedule_final.pdf" target="_blank">
+          ZESCO Schedule
+        </a>
+        <a href="https://www.zesco.co.zm/" target="_blank">
+          ZESCO Homepage
+        </a>
+        <a href="https://gadm.org/index.html" target="_blank"> 
+          GADM
+        </a>
+      </div>
+    </div>
+  </div>
+  
   <div id="map"></div>
   
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
   <script src="script.js"></script>
-  
-
 </body>
 </html>
