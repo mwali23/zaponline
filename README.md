@@ -48,8 +48,8 @@ The interface runs in demonstration mode without environment variables. Sign-in,
 ### Supabase
 
 1. Create a Supabase project or run Supabase locally.
-2. Apply `supabase/migrations/202606280001_initial_platform.sql`.
-3. Apply `supabase/seed.sql` for Copperbelt districts.
+2. In the Supabase SQL editor, copy and run `supabase/migrations/202606280001_initial_platform.sql`.
+3. Optionally copy and run `supabase/seed.sql` for Copperbelt demonstration districts.
 4. Add the Supabase URL and keys to `.env.local`.
 5. Add your production URL to Supabase Auth redirect URLs.
 
