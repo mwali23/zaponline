@@ -1,2 +1,23 @@
 import { ReportForm } from "@/components/report-form";
-export default function ReportPage(){return <><section className="page-hero"><div className="container"><span className="kicker">Community intelligence</span><h1>Help your neighbours plan.</h1><p>A quick status report makes the map more useful. ZAP combines many signals rather than treating one report as fact.</p></div></section><section className="content-section" style={{background:"#f5f6f2"}}><div className="container"><ReportForm/></div></section></>}
+
+export default function ReportPage() {
+  return (
+    <>
+      <section className="page-hero">
+        <div className="container">
+          <span className="kicker">Community intelligence</span>
+          <h1>Help your neighbours plan.</h1>
+          <p>
+            A quick status report makes the map more useful. ZAP combines many signals rather than treating one
+            report as fact.
+          </p>
+        </div>
+      </section>
+      <section className="content-section report-form-section">
+        <div className="container">
+          <ReportForm />
+        </div>
+      </section>
+    </>
+  );
+}
