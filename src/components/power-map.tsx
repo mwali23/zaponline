@@ -4,23 +4,23 @@ import { useEffect, useMemo, useState } from "react";
 import { GeoJSON, MapContainer, Popup, TileLayer } from "react-leaflet";
 import type { Feature, GeoJsonObject, Geometry } from "geojson";
 import type { Path, PathOptions } from "leaflet";
-import { districts, type PowerStatus } from "@/lib/demo-data";
+import { districts as demoDistricts, type DistrictPulse, type PowerStatus } from "@/lib/demo-data";
 
 type DistrictProperties = { NAME_2?: string; Status?: string; PopEst?: number };
 
 const colors: Record<PowerStatus, string> = {
-  powered: "#2b8a58",
-  outage: "#e05245",
-  unstable: "#e39a29",
-  unknown: "#77827d",
+  powered: "#b87333",
+  outage: "#d9362b",
+  unstable: "#d89432",
+  unknown: "#807268",
 };
 
-export function PowerMap() {
+export function PowerMap({ districts = demoDistricts }: { districts?: DistrictPulse[] }) {
   const [data, setData] = useState<GeoJsonObject | null>(null);
   useEffect(() => {
     fetch("/copperbelt.geojson").then((response) => response.json()).then(setData).catch(() => setData(null));
   }, []);
-  const districtByName = useMemo(() => new Map(districts.map((item) => [item.name, item])), []);
+  const districtByName = useMemo(() => new Map(districts.map((item) => [item.name, item])), [districts]);
 
   const style = (feature?: Feature<Geometry, DistrictProperties>): PathOptions => {
     const name = feature?.properties?.NAME_2 ?? "";

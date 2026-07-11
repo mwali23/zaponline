@@ -1,15 +1,16 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { BadgeCheck, Check, MapPin, ShieldCheck } from "lucide-react";
-import { listings } from "@/lib/demo-data";
+import { listings as demoListings } from "@/lib/demo-data";
+import { getAvailableListingBySlug } from "@/lib/live-data";
 
 export function generateStaticParams() {
-  return listings.map(({ slug }) => ({ slug }));
+  return demoListings.map(({ slug }) => ({ slug }));
 }
 
 export default async function ListingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const item = listings.find((listing) => listing.slug === slug);
+  const item = await getAvailableListingBySlug(slug);
 
   if (!item) notFound();
 

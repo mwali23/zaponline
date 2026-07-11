@@ -1,12 +1,21 @@
 export type PowerStatus = "powered" | "outage" | "unstable" | "unknown";
 
-export const districts = [
-  { name: "Kitwe", status: "outage" as PowerStatus, reports: 38, confidence: "High", updated: "8 min ago", schedule: "Restoration estimate: 14:00" },
-  { name: "Ndola", status: "powered" as PowerStatus, reports: 21, confidence: "High", updated: "12 min ago", schedule: "No active outage" },
-  { name: "Chingola", status: "unstable" as PowerStatus, reports: 17, confidence: "Medium", updated: "19 min ago", schedule: "Intermittent supply reported" },
-  { name: "Mufulira", status: "powered" as PowerStatus, reports: 14, confidence: "High", updated: "25 min ago", schedule: "No active outage" },
-  { name: "Luanshya", status: "outage" as PowerStatus, reports: 11, confidence: "Medium", updated: "31 min ago", schedule: "Planned: 10:00–16:00" },
-  { name: "Kalulushi", status: "unknown" as PowerStatus, reports: 3, confidence: "Low", updated: "1 hr ago", schedule: "More reports needed" },
+export type DistrictPulse = {
+  name: string;
+  status: PowerStatus;
+  reports: number;
+  confidence: string;
+  updated: string;
+  schedule: string;
+};
+
+export const districts: DistrictPulse[] = [
+  { name: "Kitwe", status: "outage", reports: 38, confidence: "High", updated: "8 min ago", schedule: "Restoration estimate: 14:00" },
+  { name: "Ndola", status: "powered", reports: 21, confidence: "High", updated: "12 min ago", schedule: "No active outage" },
+  { name: "Chingola", status: "unstable", reports: 17, confidence: "Medium", updated: "19 min ago", schedule: "Intermittent supply reported" },
+  { name: "Mufulira", status: "powered", reports: 14, confidence: "High", updated: "25 min ago", schedule: "No active outage" },
+  { name: "Luanshya", status: "outage", reports: 11, confidence: "Medium", updated: "31 min ago", schedule: "Planned: 10:00-16:00" },
+  { name: "Kalulushi", status: "unknown", reports: 3, confidence: "Low", updated: "1 hr ago", schedule: "More reports needed" },
 ];
 
 export type Listing = {

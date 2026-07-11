@@ -447,6 +447,18 @@ small {
   background: linear-gradient(135deg, var(--red-dark), var(--red));
 }
 
+.pulse-card.powered {
+  background: linear-gradient(135deg, #20120c, var(--copper));
+}
+
+.pulse-card.unstable {
+  background: linear-gradient(135deg, #2d1909, var(--amber));
+}
+
+.pulse-card.unknown {
+  background: linear-gradient(135deg, #15100d, #4a3b31);
+}
+
 .pulse-card small,
 .estimate small,
 .panel-metrics small {
@@ -806,6 +818,22 @@ small {
 .listing-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 24px 80px rgba(217, 54, 43, 0.22);
+}
+
+.empty-state {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 239, 0.045), transparent),
+    var(--surface-2);
+  padding: 34px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.empty-state p {
+  max-width: 560px;
+  margin-inline: auto;
 }
 
 .listing-visual {

@@ -50,10 +50,19 @@ The interface runs in demonstration mode without environment variables. Sign-in,
 1. Create a Supabase project or run Supabase locally.
 2. In the Supabase SQL editor, copy and run `supabase/migrations/202606280001_initial_platform.sql`.
 3. Optionally copy and run `supabase/seed.sql` for Copperbelt demonstration districts.
-4. Add the Supabase URL and keys to `.env.local`.
-5. Add your production URL to Supabase Auth redirect URLs.
+4. Copy and run `supabase/migrations/202607100001_lifecycle_views.sql` so public pages only read active reports/listings.
+5. Add the Supabase URL and keys to `.env.local`.
+6. Add your production URL to Supabase Auth redirect URLs.
 
 The service-role key is server-only. Never prefix it with `NEXT_PUBLIC_` or expose it to browser code.
+
+### Lifecycle and archiving
+
+- Power reports are visible only while `moderation_state = 'published'`, `archived_at is null`, and `expires_at > now()`.
+- Public map panels read from `current_district_power_status`, which aggregates only active reports.
+- Marketplace pages read from `available_service_listings`, which only returns verified provider listings where `is_active = true`, `archived_at is null`, and `available_until` has not passed.
+- Service requests should move through `open -> matched -> in_progress -> completed` or `cancelled`; completed/cancelled requests are archived by `archive_expired_records()`.
+- Run `select public.archive_expired_records();` manually from the SQL editor, or schedule it with Supabase cron/Edge Functions, to stamp expired/completed rows as archived while preserving history.
 
 ### Stripe donations
 
